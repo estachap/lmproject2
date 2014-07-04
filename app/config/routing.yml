@@ -1,0 +1,4 @@
+lm_commit:
+    resource: "@LmCommitBundle/Resources/config/routing.yml"
+    prefix:   /
+

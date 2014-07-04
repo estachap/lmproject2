@@ -1,0 +1,9 @@
+eclipse.preferences.version=1
+org.eclipse.php.debug.coreinstalledPHPDebuggers=com.dubture.symfony.debug.xdebugger
+org.eclipse.php.debug.coreinstalledPHPDefaults=com.dubture.symfony.debug.xdebugger\=PHP5.4
+org.eclipse.php.debug.coreinstalledPHPInis=C\:\\php\\php.ini
+org.eclipse.php.debug.coreinstalledPHPLoadIniDefaults=true
+org.eclipse.php.debug.coreinstalledPHPLocations=C\:\\php\\php.exe
+org.eclipse.php.debug.coreinstalledPHPNames=PHP5.4
+org.eclipse.php.debug.corephp_versions=null
+org.eclipse.php.debug.corezend_debug_port=10137

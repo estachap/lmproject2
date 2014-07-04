@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<database name="default" namespace="Lm\CommitBundle\Model" defaultIdMethod="native">
+    <table name="propelcommit">
+        <column name="id" type="varchar" required="true" primaryKey="true" />
+        <column name="title"  required="true" type="varchar" size="250" />
+        <column name="link" required="true" type="varchar" />
+        <column name="content" type="longvarchar" />
+        <column name="update_date" type="timestamp" />
+		<column name="author_id" required="true" type="integer" />
+		
+        <foreign-key foreignTable="author">
+            <reference local="author_id" foreign="id" />
+        </foreign-key>
+    </table>
+
+    <table name="author">
+        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+        <column name="name" type="varchar" required="true" primaryString="true" size="250" />
+		<column name="uri" type="varchar" size="250" />
+    </table>
+
+    <table name="file">
+        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+        <column name="filename" type="varchar" required="true" primaryString="true" size="250" />
+		<column name="commit_id" type="varchar" required="true"/>
+		<column name="commit_status" type="varchar" size="2" />
+		
+		<foreign-key foreignTable="propelcommit">
+            <reference local="commit_id" foreign="id" />
+        </foreign-key>
+    </table>	
+   
+</database>

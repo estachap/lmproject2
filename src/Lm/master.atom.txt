@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" xml:lang="en-US">
+  <id>tag:github.com,2008:/propelorm/Propel/commits/master</id>
+  <link type="text/html" rel="alternate" href="https://github.com/propelorm/Propel/commits/master"/>
+  <link type="application/atom+xml" rel="self" href="https://github.com/propelorm/Propel/commits/master.atom"/>
+  <title>Recent Commits to Propel:master</title>
+  <updated>2014-04-17T22:39:42+02:00</updated>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/3f7a284906ce3e402bcb101938270842fdad71fa</id>
+    <link type="text/html" rel="alternate" href="https://github.com/propelorm/Propel/commit/3f7a284906ce3e402bcb101938270842fdad71fa"/>
+    <title>
+        Merge pull request #864 from Gamesh/patch-3
+    </title>
+    <updated>2014-04-17T22:39:42+02:00</updated>
+    <media:thumbnail height="30" width="30" url="https://avatars0.githubusercontent.com/u/217628?s=30"/>
+    <author>
+      <name>willdurand</name>
+      <uri>https://github.com/willdurand</uri>
+    </author>
+    <content type="html">
+      &lt;pre style='white-space:pre-wrap;width:81ex'>Merge pull request #864 from Gamesh/patch-3
+
+Ternary operator supported only in php5.3+&lt;/pre>
+    </content>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/c021369967c0662113e034a461e0ce8f2b3b8f44</id>
+    <link type="text/html" rel="alternate" href="https://github.com/propelorm/Propel/commit/c021369967c0662113e034a461e0ce8f2b3b8f44"/>
+    <title>
+        Ternary operator supported only in php5.3+
+    </title>
+    <updated>2014-04-17T14:59:18+03:00</updated>
+    <media:thumbnail height="30" width="30" url="https://avatars1.githubusercontent.com/u/171747?s=30"/>
+    <author>
+      <name>Gamesh</name>
+      <uri>https://github.com/Gamesh</uri>
+    </author>
+    <content type="html">
+      &lt;pre style='white-space:pre-wrap;width:81ex'>Ternary operator supported only in php5.3+
+
+Fixes compatibility with php 5.2, as the Docs still say that propel requires 5.2.4+ version, ternary operators should not be used.&lt;/pre>
+    </content>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/e914de6d6372f4e09c82a19a59dd11ca9d16d503</id>
+    <link type="text/html" rel="alternate" href="https://github.com/propelorm/Propel/commit/e914de6d6372f4e09c82a19a59dd11ca9d16d503"/>
+    <title>
+        Merge pull request #854 from stevleibelt/master
+    </title>
+    <updated>2014-03-31T09:50:51+02:00</updated>
+    <media:thumbnail height="30" width="30" url="https://avatars0.githubusercontent.com/u/217628?s=30"/>
+    <author>
+      <name>willdurand</name>
+      <uri>https://github.com/willdurand</uri>
+    </author>
+    <content type="html">
+      &lt;pre style='white-space:pre-wrap;width:81ex'>Merge pull request #854 from stevleibelt/master
+
+Fixed bug introduced by fix [0] and discussed [1].&lt;/pre>
+    </content>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/475e666cfae520e561324855484e641e58d810b9</id>
+    <link type="text/html" rel="alternate" href="https://github.com/propelorm/Propel/commit/475e666cfae520e561324855484e641e58d810b9"/>
+    <title>
+        Fixed bug introduced by fix [0] and discussed [1].
+    </title>
+    <updated>2014-03-28T21:54:00+01:00</updated>
+    <media:thumbnail height="30" width="30" url="https://avatars1.githubusercontent.com/u/2287220?s=30"/>
+    <author>
+      <name>stevleibelt</name>
+      <uri>https://github.com/stevleibelt</uri>
+    </author>
+    <content type="html">
+      &lt;pre style='white-space:pre-wrap;width:81ex'>Fixed bug introduced by fix [0] and discussed [1].
+
+[0]
+https://github.com/propelorm/Propel/commit/dcace442d4dc0302f2db568b0550af73a53532ad
+
+[1]
+https://github.com/propelorm/Propel/commit/dcace442d4dc0302f2db568b0550af73a53532ad&lt;/pre>
+    </content>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/10180f952f38b3cdad287237b3ee439015739b0a</id>
+    <link type="text/html" rel="alternate" href="https://github.com/propelorm/Propel/commit/10180f952f38b3cdad287237b3ee439015739b0a"/>
+    <title>
+        Merge pull request #851 from exptom/1.7.1-fix
+    </title>
+    <updated>2014-03-28T11:09:05+01:00</updated>
+    <media:thumbnail height="30" width="30" url="https://avatars0.githubusercontent.com/u/217628?s=30"/>
+    <author>
+      <name>willdurand</name>
+      <uri>https://github.com/willdurand</uri>
+    </author>
+    <content type="html">
+      &lt;pre style='white-space:pre-wrap;width:81ex'>Merge pull request #851 from exptom/1.7.1-fix
+
+Fix for migrate connection error&lt;/pre>
+    </content>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/06aa3ec0345f2b0e43e6d0ebdf61697fdf1bdcaa</id>
+    <link type="text/html" rel="alternate" href="https://github.com/propelorm/Propel/commit/06aa3ec0345f2b0e43e6d0ebdf61697fdf1bdcaa"/>
+    <title>
+        Applying fix for migrate connection error
+    </title>
+    <updated>2014-03-27T11:35:10Z</updated>
+    <media:thumbnail height="30" width="30" url="https://avatars0.githubusercontent.com/u/4302032?s=30"/>
+    <author>
+      <name>exptom</name>
+      <uri>https://github.com/exptom</uri>
+    </author>
+    <content type="html">
+      &lt;pre style='white-space:pre-wrap;width:81ex'>Applying fix for migrate connection error
+
+See: https://github.com/jh-ism-online-webmaster/Propel/commit/846640a8d00a01c462c3dc78969afa2931e75b54&lt;/pre>
+    </content>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/25620fcd518591602e5082f3bc295e421b2076d8</id>
+    <link type="text/html" rel="alternate" href="https://github.com/propelorm/Propel/commit/25620fcd518591602e5082f3bc295e421b2076d8"/>
+    <title>
+        Merge pull request #847 from acim/843-single-inheritance-keys-bugfix-squashed
+    </title>
+    <updated>2014-03-21T12:04:24+01:00</updated>
+    <media:thumbnail height="30" width="30" url="https://avatars0.githubusercontent.com/u/217628?s=30"/>
+    <author>
+      <name>willdurand</name>
+      <uri>https://github.com/willdurand</uri>
+    </author>
+    <content type="html">
+      &lt;pre style='white-space:pre-wrap;width:81ex'>Merge pull request #847 from acim/843-single-inheritance-keys-bugfix-squashed
+
+Issue #843: Fixed bug when single inheritance keys contain special chars
+
+Replace #843&lt;/pre>
+    </content>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/6ae2d0281b4eeb3729d8b284c5df6e5865e0bca6</id>
+    <link type="text/html" rel="alternate" href="https://github.com/propelorm/Propel/commit/6ae2d0281b4eeb3729d8b284c5df6e5865e0bca6"/>
+    <title>
+        Issue #843: Fixed bug when single inheritance keys contain special characters
+    </title>
+    <updated>2014-03-21T10:55:40+01:00</updated>
+    <media:thumbnail height="30" width="30" url="https://0.gravatar.com/avatar/fb7c7a00b503150170c4f811aba51c4d?d=https%3A%2F%2Fassets-cdn.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png&amp;r=x&amp;s=30"/>
+    <author>
+      <name></name>
+      <email>boban.acimovic@gmail.com</email>
+    </author>
+    <content type="html">
+      &lt;pre style='white-space:pre-wrap;width:81ex'>Issue #843: Fixed bug when single inheritance keys contain special characters&lt;/pre>
+    </content>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/7b4fd63d338aaa8c6d9c4580a60b7c81465dd0fc</id>
+    <link type="text/html" rel="alternate" href="https://github.com/propelorm/Propel/commit/7b4fd63d338aaa8c6d9c4580a60b7c81465dd0fc"/>
+    <title>
+        Merge pull request #846 from exptom/patch-1
+    </title>
+    <updated>2014-03-21T09:57:48+01:00</updated>
+    <media:thumbnail height="30" width="30" url="https://avatars0.githubusercontent.com/u/217628?s=30"/>
+    <author>
+      <name>willdurand</name>
+      <uri>https://github.com/willdurand</uri>
+    </author>
+    <content type="html">
+      &lt;pre style='white-space:pre-wrap;width:81ex'>Merge pull request #846 from exptom/patch-1
+
+Honour value of Timestampable&#39;s &quot;disable_updated_at&quot; parameter in SoftDeleteBehavior&lt;/pre>
+    </content>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/aab46745bdac4e7e65a4fee5ed1bbac6cac7a1f5</id>
+    <link type="text/html" rel="alternate" href="https://github.com/propelorm/Propel/commit/aab46745bdac4e7e65a4fee5ed1bbac6cac7a1f5"/>
+    <title>
+        Honour value of &#39;disable_updated_at&#39; paramter
+    </title>
+    <updated>2014-03-20T15:58:30Z</updated>
+    <media:thumbnail height="30" width="30" url="https://avatars0.githubusercontent.com/u/4302032?s=30"/>
+    <author>
+      <name>exptom</name>
+      <uri>https://github.com/exptom</uri>
+    </author>
+    <content type="html">
+      &lt;pre style='white-space:pre-wrap;width:81ex'>Honour value of &#39;disable_updated_at&#39; paramter
+
+Honour value of &#39;disable_updated_at timestampable behaviour parameter.&lt;/pre>
+    </content>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/10fe1be60e6facab893d04aa2b37a0034d581309</id>
+    <link type="text/html" rel="alternate" href="https://github.com/propelorm/Propel/commit/10fe1be60e6facab893d04aa2b37a0034d581309"/>
+    <title>
+        Merge pull request #839 from javer/patch-diff-samecolumns
+    </title>
+    <updated>2014-03-16T21:07:51+01:00</updated>
+    <media:thumbnail height="30" width="30" url="https://avatars0.githubusercontent.com/u/217628?s=30"/>
+    <author>
+      <name>willdurand</name>
+      <uri>https://github.com/willdurand</uri>
+    </author>
+    <content type="html">
+      &lt;pre style='white-space:pre-wrap;width:81ex'>Merge pull request #839 from javer/patch-diff-samecolumns
+
+Fixed diff generator when several identical tables or columns were renamed&lt;/pre>
+    </content>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/3f5e0101595cdfd9878ad95df998cc6c19ff75e5</id>
+    <link type="text/html" rel="alternate" href="https://github.com/propelorm/Propel/commit/3f5e0101595cdfd9878ad95df998cc6c19ff75e5"/>
+    <title>
+        Merge pull request #821 from stood/mysqldesc_for_reverse_task
+    </title>
+    <updated>2014-03-16T21:06:13+01:00</updated>
+    <media:thumbnail height="30" width="30" url="https://avatars0.githubusercontent.com/u/217628?s=30"/>
+    <author>
+      <name>willdurand</name>
+      <uri>https://github.com/willdurand</uri>
+    </author>
+    <content type="html">
+      &lt;pre style='white-space:pre-wrap;width:81ex'>Merge pull request #821 from stood/mysqldesc_for_reverse_task
+
+Mysqldesc for reverse task&lt;/pre>
+    </content>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/62afa323b2f1eb67b27fd11e5954873f74108b61</id>
+    <link type="text/html" rel="alternate" href="https://github.com/propelorm/Propel/commit/62afa323b2f1eb67b27fd11e5954873f74108b61"/>
+    <title>
+        Add function for test utf8 and add a description with accent in test
+    </title>
+    <updated>2014-03-06T16:34:06+01:00</updated>
+    <media:thumbnail height="30" width="30" url="https://avatars3.githubusercontent.com/u/327248?s=30"/>
+    <author>
+      <name>stood</name>
+      <uri>https://github.com/stood</uri>
+    </author>
+    <content type="html">
+      &lt;pre style='white-space:pre-wrap;width:81ex'>Add function for test utf8 and add a description with accent in test&lt;/pre>
+    </content>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/b313c3d0249a12bb7e42fcf5092ce3e9ed0315dd</id>
+    <link type="text/html" rel="alternate" href="https://github.com/propelorm/Propel/commit/b313c3d0249a12bb7e42fcf5092ce3e9ed0315dd"/>
+    <title>
+        Fixed diff generator when several identical tables were renamed
+    </title>
+    <updated>2014-03-05T12:46:46+02:00</updated>
+    <media:thumbnail height="30" width="30" url="https://avatars1.githubusercontent.com/u/591296?s=30"/>
+    <author>
+      <name>javer</name>
+      <uri>https://github.com/javer</uri>
+    </author>
+    <content type="html">
+      &lt;pre style='white-space:pre-wrap;width:81ex'>Fixed diff generator when several identical tables were renamed
+
+Fixed diff generator when databases have several tables with identical
+DDL and several of them were renamed.&lt;/pre>
+    </content>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/f62d33455e6c120930ef4d7331182f45017ac81e</id>
+    <link type="text/html" rel="alternate" href="https://github.com/propelorm/Propel/commit/f62d33455e6c120930ef4d7331182f45017ac81e"/>
+    <title>
+        Fixed diff generator when several identical columns were renamed
+    </title>
+    <updated>2014-03-04T22:18:38+02:00</updated>
+    <media:thumbnail height="30" width="30" url="https://avatars1.githubusercontent.com/u/591296?s=30"/>
+    <author>
+      <name>javer</name>
+      <uri>https://github.com/javer</uri>
+    </author>
+    <content type="html">
+      &lt;pre style='white-space:pre-wrap;width:81ex'>Fixed diff generator when several identical columns were renamed
+
+Fixed diff generator when two tables have several columns with
+identical DDL and several of them were renamed.&lt;/pre>
+    </content>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/4566669d64af73ed43a5a540041ca00fe7b09283</id>
+    <link type="text/html" rel="alternate" href="https://github.com/propelorm/Propel/commit/4566669d64af73ed43a5a540041ca00fe7b09283"/>
+    <title>
+        Bump version to 1.7.2-dev
+    </title>
+    <updated>2014-02-25T10:30:11+01:00</updated>
+    <media:thumbnail height="30" width="30" url="https://avatars0.githubusercontent.com/u/217628?s=30"/>
+    <author>
+      <name>willdurand</name>
+      <uri>https://github.com/willdurand</uri>
+    </author>
+    <content type="html">
+      &lt;pre style='white-space:pre-wrap;width:81ex'>Bump version to 1.7.2-dev&lt;/pre>
+    </content>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/af527736586388c21a5a0a5f97914e7264fe580c</id>
+    <link type="text/html" rel="alternate" href="https://github.com/propelorm/Propel/commit/af527736586388c21a5a0a5f97914e7264fe580c"/>
+    <title>
+        Prepare 1.7.1 release
+    </title>
+    <updated>2014-02-25T10:13:58+01:00</updated>
+    <media:thumbnail height="30" width="30" url="https://avatars0.githubusercontent.com/u/217628?s=30"/>
+    <author>
+      <name>willdurand</name>
+      <uri>https://github.com/willdurand</uri>
+    </author>
+    <content type="html">
+      &lt;pre style='white-space:pre-wrap;width:81ex'>Prepare 1.7.1 release&lt;/pre>
+    </content>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/81a7125b3cad035e8e0257492034fb55a200be63</id>
+    <link type="text/html" rel="alternate" href="https://github.com/propelorm/Propel/commit/81a7125b3cad035e8e0257492034fb55a200be63"/>
+    <title>
+        Fix CS
+    </title>
+    <updated>2014-02-25T10:11:28+01:00</updated>
+    <media:thumbnail height="30" width="30" url="https://avatars0.githubusercontent.com/u/217628?s=30"/>
+    <author>
+      <name>willdurand</name>
+      <uri>https://github.com/willdurand</uri>
+    </author>
+    <content type="html">
+      &lt;pre style='white-space:pre-wrap;width:81ex'>Fix CS&lt;/pre>
+    </content>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/3db5195466b97c4b823a96cba4b66a60cb21c4f1</id>
+    <link type="text/html" rel="alternate" href="https://github.com/propelorm/Propel/commit/3db5195466b97c4b823a96cba4b66a60cb21c4f1"/>
+    <title>
+        Merge pull request #820 from stood/fix_values_boolean
+    </title>
+    <updated>2014-02-25T09:45:09+01:00</updated>
+    <media:thumbnail height="30" width="30" url="https://avatars0.githubusercontent.com/u/217628?s=30"/>
+    <author>
+      <name>willdurand</name>
+      <uri>https://github.com/willdurand</uri>
+    </author>
+    <content type="html">
+      &lt;pre style='white-space:pre-wrap;width:81ex'>Merge pull request #820 from stood/fix_values_boolean
+
+return Boolean value&lt;/pre>
+    </content>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/19ac478c920ff061504c1fd7738fd32c010d99b1</id>
+    <link type="text/html" rel="alternate" href="https://github.com/propelorm/Propel/commit/19ac478c920ff061504c1fd7738fd32c010d99b1"/>
+    <title>
+        fix bug with boolean value because no return FALSE value
+    </title>
+    <updated>2014-02-21T20:25:24+01:00</updated>
+    <media:thumbnail height="30" width="30" url="https://avatars3.githubusercontent.com/u/327248?s=30"/>
+    <author>
+      <name>stood</name>
+      <uri>https://github.com/stood</uri>
+    </author>
+    <content type="html">
+      &lt;pre style='white-space:pre-wrap;width:81ex'>fix bug with boolean value because no return FALSE value&lt;/pre>
+    </content>
+  </entry>
+</feed>

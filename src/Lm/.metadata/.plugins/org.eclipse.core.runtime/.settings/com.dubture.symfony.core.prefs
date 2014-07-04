@@ -1,0 +1,3 @@
+com.dubture.symfony.corephp_executable=C\:\\php\\php.exe
+eclipse.preferences.version=1
+synthetic_services=[{"name"\:"request","class"\:"Symfony\\\\Component\\\\HttpFoundation\\\\Request"}]
