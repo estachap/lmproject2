@@ -15,6 +15,7 @@ use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Debug\Debug;
 use Lm\Console\Command\GreetCommand;
 use Lm\Console\Command\PropelCommitImportCommand;
+use Lm\Console\Command\PropelCommitAtomFeedCommand;
 
 $input = new ArgvInput();
 $env = $input->getParameterOption(array('--env', '-e'), getenv('SYMFONY_ENV') ?: 'dev');
@@ -27,5 +28,6 @@ if ($debug) {
 $kernel = new AppKernel($env, $debug);
 $application = new Application($kernel);
 $application->add(new GreetCommand());
+$application->add(new PropelCommitAtomFeedCommand());
 $application->add(new PropelCommitImportCommand());
 $application->run($input);

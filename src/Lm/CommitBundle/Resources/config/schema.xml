@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <database name="default" namespace="Lm\CommitBundle\Model" defaultIdMethod="native">
     <table name="propelcommit">
-        <column name="id" type="varchar" required="true" primaryKey="true" />
+        <column name="id" type="varchar" size="500" required="true" primaryKey="true" />
         <column name="title"  required="true" type="varchar" size="250" />
         <column name="link" required="true" type="varchar" />
         <column name="content" type="longvarchar" />
@@ -29,5 +29,12 @@
             <reference local="commit_id" foreign="id" />
         </foreign-key>
     </table>	
+	
+	<table name="lmlog">
+		<column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+		<column name="logtype" type="enum" valueSet="1000,1001,1002" required="true"/>
+		<column name="logmessage" type="varchar" size="1000" required="true"/>
+		<column name="logdate" type="timestamp" required="true"/>
+	</table>
    
 </database>

@@ -14,12 +14,12 @@ class PropelCommitImportCommand extends Command
 	protected function configure()
 	{
 		$this
-            ->setName('propelcommit:import')
-            ->setDescription('Import the maste.atom commit xml from Propel github repo')
+            ->setName('propelcommit:import_to_db')
+            ->setDescription('Import the master.atom commit entries to database')
             ->addArgument(
                 'date',
                 InputArgument::OPTIONAL,
-                'What is the first date from which to commit'
+                'Which entries you wnat to import?'
             )            
         ;
 	
@@ -30,15 +30,11 @@ class PropelCommitImportCommand extends Command
 		$date = $input->getArgument('date');
 		//we don't anything right now with this parameter
 		
-		$curl = new CurlHelper();
-		$url = 'https://github.com/propelorm/Propel/commits/master.atom';
-		$response = $curl->curl_get($url);
+		//check if master.atom.txt' exists
+		$filename = __DIR__ .'\\master.atom.txt';
+		$file = fopen( $filename, 'r');
 		
-		if($response) {
-			//Save the result into an text file
-			$filename = __DIR__ .'\\master.atom.txt';
-			$file = fopen( $filename, 'w');
-			fwrite($file, $response);
+		if($file){
 			fclose($file);
 			
 			//process the atom feed
@@ -46,7 +42,7 @@ class PropelCommitImportCommand extends Command
 			
 			$output->writeln('Done!\n');
 		}else {
-			$output->writeln('The response is empty');
+			$output->writeln('File ' . __DIR__ .'\\master.atom.txt was not found' );
 		}
 	
 	}

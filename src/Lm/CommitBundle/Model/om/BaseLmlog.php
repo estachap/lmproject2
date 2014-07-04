@@ -5,30 +5,30 @@ namespace Lm\CommitBundle\Model\om;
 use \BaseObject;
 use \BasePeer;
 use \Criteria;
+use \DateTime;
 use \Exception;
 use \PDO;
 use \Persistent;
 use \Propel;
+use \PropelDateTime;
 use \PropelException;
 use \PropelPDO;
-use Lm\CommitBundle\Model\File;
-use Lm\CommitBundle\Model\FilePeer;
-use Lm\CommitBundle\Model\FileQuery;
-use Lm\CommitBundle\Model\Propelcommit;
-use Lm\CommitBundle\Model\PropelcommitQuery;
+use Lm\CommitBundle\Model\Lmlog;
+use Lm\CommitBundle\Model\LmlogPeer;
+use Lm\CommitBundle\Model\LmlogQuery;
 
-abstract class BaseFile extends BaseObject implements Persistent
+abstract class BaseLmlog extends BaseObject implements Persistent
 {
     /**
      * Peer class name
      */
-    const PEER = 'Lm\\CommitBundle\\Model\\FilePeer';
+    const PEER = 'Lm\\CommitBundle\\Model\\LmlogPeer';
 
     /**
      * The Peer class.
      * Instance provides a convenient way of calling static methods on a class
      * that calling code may not be able to identify.
-     * @var        FilePeer
+     * @var        LmlogPeer
      */
     protected static $peer;
 
@@ -45,27 +45,22 @@ abstract class BaseFile extends BaseObject implements Persistent
     protected $id;
 
     /**
-     * The value for the filename field.
-     * @var        string
+     * The value for the logtype field.
+     * @var        int
      */
-    protected $filename;
+    protected $logtype;
 
     /**
-     * The value for the commit_id field.
+     * The value for the logmessage field.
      * @var        string
      */
-    protected $commit_id;
+    protected $logmessage;
 
     /**
-     * The value for the commit_status field.
+     * The value for the logdate field.
      * @var        string
      */
-    protected $commit_status;
-
-    /**
-     * @var        Propelcommit
-     */
-    protected $aPropelcommit;
+    protected $logdate;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -99,43 +94,80 @@ abstract class BaseFile extends BaseObject implements Persistent
     }
 
     /**
-     * Get the [filename] column value.
+     * Get the [logtype] column value.
      *
-     * @return string
+     * @return int
+     * @throws PropelException - if the stored enum key is unknown.
      */
-    public function getFilename()
+    public function getLogtype()
     {
+        if (null === $this->logtype) {
+            return null;
+        }
+        $valueSet = LmlogPeer::getValueSet(LmlogPeer::LOGTYPE);
+        if (!isset($valueSet[$this->logtype])) {
+            throw new PropelException('Unknown stored enum key: ' . $this->logtype);
+        }
 
-        return $this->filename;
+        return $valueSet[$this->logtype];
     }
 
     /**
-     * Get the [commit_id] column value.
+     * Get the [logmessage] column value.
      *
      * @return string
      */
-    public function getCommitId()
+    public function getLogmessage()
     {
 
-        return $this->commit_id;
+        return $this->logmessage;
     }
 
     /**
-     * Get the [commit_status] column value.
+     * Get the [optionally formatted] temporal [logdate] column value.
      *
-     * @return string
+     *
+     * @param string $format The date/time format string (either date()-style or strftime()-style).
+     *				 If format is null, then the raw DateTime object will be returned.
+     * @return mixed Formatted date/time value as string or DateTime object (if format is null), null if column is null, and 0 if column value is 0000-00-00 00:00:00
+     * @throws PropelException - if unable to parse/validate the date/time value.
      */
-    public function getCommitStatus()
+    public function getLogdate($format = null)
     {
+        if ($this->logdate === null) {
+            return null;
+        }
 
-        return $this->commit_status;
+        if ($this->logdate === '0000-00-00 00:00:00') {
+            // while technically this is not a default value of null,
+            // this seems to be closest in meaning.
+            return null;
+        }
+
+        try {
+            $dt = new DateTime($this->logdate);
+        } catch (Exception $x) {
+            throw new PropelException("Internally stored date/time/timestamp value could not be converted to DateTime: " . var_export($this->logdate, true), $x);
+        }
+
+        if ($format === null) {
+            // Because propel.useDateTimeClass is true, we return a DateTime object.
+            return $dt;
+        }
+
+        if (strpos($format, '%') !== false) {
+            return strftime($format, $dt->format('U'));
+        }
+
+        return $dt->format($format);
+
     }
 
     /**
      * Set the value of [id] column.
      *
      * @param  int $v new value
-     * @return File The current object (for fluent API support)
+     * @return Lmlog The current object (for fluent API support)
      */
     public function setId($v)
     {
@@ -145,7 +177,7 @@ abstract class BaseFile extends BaseObject implements Persistent
 
         if ($this->id !== $v) {
             $this->id = $v;
-            $this->modifiedColumns[] = FilePeer::ID;
+            $this->modifiedColumns[] = LmlogPeer::ID;
         }
 
 
@@ -153,71 +185,74 @@ abstract class BaseFile extends BaseObject implements Persistent
     } // setId()
 
     /**
-     * Set the value of [filename] column.
+     * Set the value of [logtype] column.
      *
-     * @param  string $v new value
-     * @return File The current object (for fluent API support)
+     * @param  int $v new value
+     * @return Lmlog The current object (for fluent API support)
+     * @throws PropelException - if the value is not accepted by this enum.
      */
-    public function setFilename($v)
+    public function setLogtype($v)
     {
         if ($v !== null) {
-            $v = (string) $v;
+            $valueSet = LmlogPeer::getValueSet(LmlogPeer::LOGTYPE);
+            if (!in_array($v, $valueSet)) {
+                throw new PropelException(sprintf('Value "%s" is not accepted in this enumerated column', $v));
+            }
+            $v = array_search($v, $valueSet);
         }
 
-        if ($this->filename !== $v) {
-            $this->filename = $v;
-            $this->modifiedColumns[] = FilePeer::FILENAME;
+        if ($this->logtype !== $v) {
+            $this->logtype = $v;
+            $this->modifiedColumns[] = LmlogPeer::LOGTYPE;
         }
 
 
         return $this;
-    } // setFilename()
+    } // setLogtype()
 
     /**
-     * Set the value of [commit_id] column.
+     * Set the value of [logmessage] column.
      *
      * @param  string $v new value
-     * @return File The current object (for fluent API support)
+     * @return Lmlog The current object (for fluent API support)
      */
-    public function setCommitId($v)
+    public function setLogmessage($v)
     {
         if ($v !== null) {
             $v = (string) $v;
         }
 
-        if ($this->commit_id !== $v) {
-            $this->commit_id = $v;
-            $this->modifiedColumns[] = FilePeer::COMMIT_ID;
-        }
-
-        if ($this->aPropelcommit !== null && $this->aPropelcommit->getId() !== $v) {
-            $this->aPropelcommit = null;
+        if ($this->logmessage !== $v) {
+            $this->logmessage = $v;
+            $this->modifiedColumns[] = LmlogPeer::LOGMESSAGE;
         }
 
 
         return $this;
-    } // setCommitId()
+    } // setLogmessage()
 
     /**
-     * Set the value of [commit_status] column.
+     * Sets the value of [logdate] column to a normalized version of the date/time value specified.
      *
-     * @param  string $v new value
-     * @return File The current object (for fluent API support)
+     * @param mixed $v string, integer (timestamp), or DateTime value.
+     *               Empty strings are treated as null.
+     * @return Lmlog The current object (for fluent API support)
      */
-    public function setCommitStatus($v)
+    public function setLogdate($v)
     {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->commit_status !== $v) {
-            $this->commit_status = $v;
-            $this->modifiedColumns[] = FilePeer::COMMIT_STATUS;
-        }
+        $dt = PropelDateTime::newInstance($v, null, 'DateTime');
+        if ($this->logdate !== null || $dt !== null) {
+            $currentDateAsString = ($this->logdate !== null && $tmpDt = new DateTime($this->logdate)) ? $tmpDt->format('Y-m-d H:i:s') : null;
+            $newDateAsString = $dt ? $dt->format('Y-m-d H:i:s') : null;
+            if ($currentDateAsString !== $newDateAsString) {
+                $this->logdate = $newDateAsString;
+                $this->modifiedColumns[] = LmlogPeer::LOGDATE;
+            }
+        } // if either are not null
 
 
         return $this;
-    } // setCommitStatus()
+    } // setLogdate()
 
     /**
      * Indicates whether the columns in this object are only set to default values.
@@ -252,9 +287,9 @@ abstract class BaseFile extends BaseObject implements Persistent
         try {
 
             $this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
-            $this->filename = ($row[$startcol + 1] !== null) ? (string) $row[$startcol + 1] : null;
-            $this->commit_id = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
-            $this->commit_status = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
+            $this->logtype = ($row[$startcol + 1] !== null) ? (int) $row[$startcol + 1] : null;
+            $this->logmessage = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
+            $this->logdate = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -264,10 +299,10 @@ abstract class BaseFile extends BaseObject implements Persistent
             }
             $this->postHydrate($row, $startcol, $rehydrate);
 
-            return $startcol + 4; // 4 = FilePeer::NUM_HYDRATE_COLUMNS.
+            return $startcol + 4; // 4 = LmlogPeer::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
-            throw new PropelException("Error populating File object", $e);
+            throw new PropelException("Error populating Lmlog object", $e);
         }
     }
 
@@ -287,9 +322,6 @@ abstract class BaseFile extends BaseObject implements Persistent
     public function ensureConsistency()
     {
 
-        if ($this->aPropelcommit !== null && $this->commit_id !== $this->aPropelcommit->getId()) {
-            $this->aPropelcommit = null;
-        }
     } // ensureConsistency
 
     /**
@@ -313,13 +345,13 @@ abstract class BaseFile extends BaseObject implements Persistent
         }
 
         if ($con === null) {
-            $con = Propel::getConnection(FilePeer::DATABASE_NAME, Propel::CONNECTION_READ);
+            $con = Propel::getConnection(LmlogPeer::DATABASE_NAME, Propel::CONNECTION_READ);
         }
 
         // We don't need to alter the object instance pool; we're just modifying this instance
         // already in the pool.
 
-        $stmt = FilePeer::doSelectStmt($this->buildPkeyCriteria(), $con);
+        $stmt = LmlogPeer::doSelectStmt($this->buildPkeyCriteria(), $con);
         $row = $stmt->fetch(PDO::FETCH_NUM);
         $stmt->closeCursor();
         if (!$row) {
@@ -329,7 +361,6 @@ abstract class BaseFile extends BaseObject implements Persistent
 
         if ($deep) {  // also de-associate any related objects?
 
-            $this->aPropelcommit = null;
         } // if (deep)
     }
 
@@ -350,12 +381,12 @@ abstract class BaseFile extends BaseObject implements Persistent
         }
 
         if ($con === null) {
-            $con = Propel::getConnection(FilePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+            $con = Propel::getConnection(LmlogPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
         }
 
         $con->beginTransaction();
         try {
-            $deleteQuery = FileQuery::create()
+            $deleteQuery = LmlogQuery::create()
                 ->filterByPrimaryKey($this->getPrimaryKey());
             $ret = $this->preDelete($con);
             if ($ret) {
@@ -393,7 +424,7 @@ abstract class BaseFile extends BaseObject implements Persistent
         }
 
         if ($con === null) {
-            $con = Propel::getConnection(FilePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+            $con = Propel::getConnection(LmlogPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
         }
 
         $con->beginTransaction();
@@ -413,7 +444,7 @@ abstract class BaseFile extends BaseObject implements Persistent
                     $this->postUpdate($con);
                 }
                 $this->postSave($con);
-                FilePeer::addInstanceToPool($this);
+                LmlogPeer::addInstanceToPool($this);
             } else {
                 $affectedRows = 0;
             }
@@ -442,18 +473,6 @@ abstract class BaseFile extends BaseObject implements Persistent
         $affectedRows = 0; // initialize var to track total num of affected rows
         if (!$this->alreadyInSave) {
             $this->alreadyInSave = true;
-
-            // We call the save method on the following object(s) if they
-            // were passed to this object by their corresponding set
-            // method.  This object relates to these object(s) by a
-            // foreign key reference.
-
-            if ($this->aPropelcommit !== null) {
-                if ($this->aPropelcommit->isModified() || $this->aPropelcommit->isNew()) {
-                    $affectedRows += $this->aPropelcommit->save($con);
-                }
-                $this->setPropelcommit($this->aPropelcommit);
-            }
 
             if ($this->isNew() || $this->isModified()) {
                 // persist changes
@@ -486,27 +505,27 @@ abstract class BaseFile extends BaseObject implements Persistent
         $modifiedColumns = array();
         $index = 0;
 
-        $this->modifiedColumns[] = FilePeer::ID;
+        $this->modifiedColumns[] = LmlogPeer::ID;
         if (null !== $this->id) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key (' . FilePeer::ID . ')');
+            throw new PropelException('Cannot insert a value for auto-increment primary key (' . LmlogPeer::ID . ')');
         }
 
          // check the columns in natural order for more readable SQL queries
-        if ($this->isColumnModified(FilePeer::ID)) {
+        if ($this->isColumnModified(LmlogPeer::ID)) {
             $modifiedColumns[':p' . $index++]  = '`id`';
         }
-        if ($this->isColumnModified(FilePeer::FILENAME)) {
-            $modifiedColumns[':p' . $index++]  = '`filename`';
+        if ($this->isColumnModified(LmlogPeer::LOGTYPE)) {
+            $modifiedColumns[':p' . $index++]  = '`logtype`';
         }
-        if ($this->isColumnModified(FilePeer::COMMIT_ID)) {
-            $modifiedColumns[':p' . $index++]  = '`commit_id`';
+        if ($this->isColumnModified(LmlogPeer::LOGMESSAGE)) {
+            $modifiedColumns[':p' . $index++]  = '`logmessage`';
         }
-        if ($this->isColumnModified(FilePeer::COMMIT_STATUS)) {
-            $modifiedColumns[':p' . $index++]  = '`commit_status`';
+        if ($this->isColumnModified(LmlogPeer::LOGDATE)) {
+            $modifiedColumns[':p' . $index++]  = '`logdate`';
         }
 
         $sql = sprintf(
-            'INSERT INTO `file` (%s) VALUES (%s)',
+            'INSERT INTO `lmlog` (%s) VALUES (%s)',
             implode(', ', $modifiedColumns),
             implode(', ', array_keys($modifiedColumns))
         );
@@ -518,14 +537,14 @@ abstract class BaseFile extends BaseObject implements Persistent
                     case '`id`':
                         $stmt->bindValue($identifier, $this->id, PDO::PARAM_INT);
                         break;
-                    case '`filename`':
-                        $stmt->bindValue($identifier, $this->filename, PDO::PARAM_STR);
+                    case '`logtype`':
+                        $stmt->bindValue($identifier, $this->logtype, PDO::PARAM_INT);
                         break;
-                    case '`commit_id`':
-                        $stmt->bindValue($identifier, $this->commit_id, PDO::PARAM_STR);
+                    case '`logmessage`':
+                        $stmt->bindValue($identifier, $this->logmessage, PDO::PARAM_STR);
                         break;
-                    case '`commit_status`':
-                        $stmt->bindValue($identifier, $this->commit_status, PDO::PARAM_STR);
+                    case '`logdate`':
+                        $stmt->bindValue($identifier, $this->logdate, PDO::PARAM_STR);
                         break;
                 }
             }
@@ -621,19 +640,7 @@ abstract class BaseFile extends BaseObject implements Persistent
             $failureMap = array();
 
 
-            // We call the validate method on the following object(s) if they
-            // were passed to this object by their corresponding set
-            // method.  This object relates to these object(s) by a
-            // foreign key reference.
-
-            if ($this->aPropelcommit !== null) {
-                if (!$this->aPropelcommit->validate($columns)) {
-                    $failureMap = array_merge($failureMap, $this->aPropelcommit->getValidationFailures());
-                }
-            }
-
-
-            if (($retval = FilePeer::doValidate($this, $columns)) !== true) {
+            if (($retval = LmlogPeer::doValidate($this, $columns)) !== true) {
                 $failureMap = array_merge($failureMap, $retval);
             }
 
@@ -652,12 +659,12 @@ abstract class BaseFile extends BaseObject implements Persistent
      */
     public function buildCriteria()
     {
-        $criteria = new Criteria(FilePeer::DATABASE_NAME);
+        $criteria = new Criteria(LmlogPeer::DATABASE_NAME);
 
-        if ($this->isColumnModified(FilePeer::ID)) $criteria->add(FilePeer::ID, $this->id);
-        if ($this->isColumnModified(FilePeer::FILENAME)) $criteria->add(FilePeer::FILENAME, $this->filename);
-        if ($this->isColumnModified(FilePeer::COMMIT_ID)) $criteria->add(FilePeer::COMMIT_ID, $this->commit_id);
-        if ($this->isColumnModified(FilePeer::COMMIT_STATUS)) $criteria->add(FilePeer::COMMIT_STATUS, $this->commit_status);
+        if ($this->isColumnModified(LmlogPeer::ID)) $criteria->add(LmlogPeer::ID, $this->id);
+        if ($this->isColumnModified(LmlogPeer::LOGTYPE)) $criteria->add(LmlogPeer::LOGTYPE, $this->logtype);
+        if ($this->isColumnModified(LmlogPeer::LOGMESSAGE)) $criteria->add(LmlogPeer::LOGMESSAGE, $this->logmessage);
+        if ($this->isColumnModified(LmlogPeer::LOGDATE)) $criteria->add(LmlogPeer::LOGDATE, $this->logdate);
 
         return $criteria;
     }
@@ -672,8 +679,8 @@ abstract class BaseFile extends BaseObject implements Persistent
      */
     public function buildPkeyCriteria()
     {
-        $criteria = new Criteria(FilePeer::DATABASE_NAME);
-        $criteria->add(FilePeer::ID, $this->id);
+        $criteria = new Criteria(LmlogPeer::DATABASE_NAME);
+        $criteria->add(LmlogPeer::ID, $this->id);
 
         return $criteria;
     }
@@ -714,28 +721,16 @@ abstract class BaseFile extends BaseObject implements Persistent
      * If desired, this method can also make copies of all associated (fkey referrers)
      * objects.
      *
-     * @param object $copyObj An object of File (or compatible) type.
+     * @param object $copyObj An object of Lmlog (or compatible) type.
      * @param boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
      * @param boolean $makeNew Whether to reset autoincrement PKs and make the object new.
      * @throws PropelException
      */
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
-        $copyObj->setFilename($this->getFilename());
-        $copyObj->setCommitId($this->getCommitId());
-        $copyObj->setCommitStatus($this->getCommitStatus());
-
-        if ($deepCopy && !$this->startCopy) {
-            // important: temporarily setNew(false) because this affects the behavior of
-            // the getter/setter methods for fkey referrer objects.
-            $copyObj->setNew(false);
-            // store object hash to prevent cycle
-            $this->startCopy = true;
-
-            //unflag object copy
-            $this->startCopy = false;
-        } // if ($deepCopy)
-
+        $copyObj->setLogtype($this->getLogtype());
+        $copyObj->setLogmessage($this->getLogmessage());
+        $copyObj->setLogdate($this->getLogdate());
         if ($makeNew) {
             $copyObj->setNew(true);
             $copyObj->setId(NULL); // this is a auto-increment column, so set to default value
@@ -751,7 +746,7 @@ abstract class BaseFile extends BaseObject implements Persistent
      * objects.
      *
      * @param boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-     * @return File Clone of current object.
+     * @return Lmlog Clone of current object.
      * @throws PropelException
      */
     public function copy($deepCopy = false)
@@ -771,67 +766,15 @@ abstract class BaseFile extends BaseObject implements Persistent
      * same instance for all member of this class. The method could therefore
      * be static, but this would prevent one from overriding the behavior.
      *
-     * @return FilePeer
+     * @return LmlogPeer
      */
     public function getPeer()
     {
         if (self::$peer === null) {
-            self::$peer = new FilePeer();
+            self::$peer = new LmlogPeer();
         }
 
         return self::$peer;
-    }
-
-    /**
-     * Declares an association between this object and a Propelcommit object.
-     *
-     * @param                  Propelcommit $v
-     * @return File The current object (for fluent API support)
-     * @throws PropelException
-     */
-    public function setPropelcommit(Propelcommit $v = null)
-    {
-        if ($v === null) {
-            $this->setCommitId(NULL);
-        } else {
-            $this->setCommitId($v->getId());
-        }
-
-        $this->aPropelcommit = $v;
-
-        // Add binding for other direction of this n:n relationship.
-        // If this object has already been added to the Propelcommit object, it will not be re-added.
-        if ($v !== null) {
-            $v->addFile($this);
-        }
-
-
-        return $this;
-    }
-
-
-    /**
-     * Get the associated Propelcommit object
-     *
-     * @param PropelPDO $con Optional Connection object.
-     * @param $doQuery Executes a query to get the object if required
-     * @return Propelcommit The associated Propelcommit object.
-     * @throws PropelException
-     */
-    public function getPropelcommit(PropelPDO $con = null, $doQuery = true)
-    {
-        if ($this->aPropelcommit === null && (($this->commit_id !== "" && $this->commit_id !== null)) && $doQuery) {
-            $this->aPropelcommit = PropelcommitQuery::create()->findPk($this->commit_id, $con);
-            /* The following can be used additionally to
-                guarantee the related object contains a reference
-                to this object.  This level of coupling may, however, be
-                undesirable since it could result in an only partially populated collection
-                in the referenced object.
-                $this->aPropelcommit->addFiles($this);
-             */
-        }
-
-        return $this->aPropelcommit;
     }
 
     /**
@@ -840,9 +783,9 @@ abstract class BaseFile extends BaseObject implements Persistent
     public function clear()
     {
         $this->id = null;
-        $this->filename = null;
-        $this->commit_id = null;
-        $this->commit_status = null;
+        $this->logtype = null;
+        $this->logmessage = null;
+        $this->logdate = null;
         $this->alreadyInSave = false;
         $this->alreadyInValidation = false;
         $this->alreadyInClearAllReferencesDeep = false;
@@ -865,24 +808,20 @@ abstract class BaseFile extends BaseObject implements Persistent
     {
         if ($deep && !$this->alreadyInClearAllReferencesDeep) {
             $this->alreadyInClearAllReferencesDeep = true;
-            if ($this->aPropelcommit instanceof Persistent) {
-              $this->aPropelcommit->clearAllReferences($deep);
-            }
 
             $this->alreadyInClearAllReferencesDeep = false;
         } // if ($deep)
 
-        $this->aPropelcommit = null;
     }
 
     /**
      * return the string representation of this object
      *
-     * @return string The value of the 'filename' column
+     * @return string
      */
     public function __toString()
     {
-        return (string) $this->getFilename();
+        return (string) $this->exportTo(LmlogPeer::DEFAULT_STRING_FORMAT);
     }
 
     /**

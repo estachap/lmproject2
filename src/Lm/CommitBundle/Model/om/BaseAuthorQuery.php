@@ -56,7 +56,7 @@ abstract class BaseAuthorQuery extends ModelCriteria
     public function __construct($dbName = null, $modelName = null, $modelAlias = null)
     {
         if (null === $dbName) {
-            $dbName = 'lmdb';
+            $dbName = 'default';
         }
         if (null === $modelName) {
             $modelName = 'Lm\\CommitBundle\\Model\\Author';

@@ -83,8 +83,8 @@ class PropelAtomFeed
 		foreach($this->_xmlfeed->entry as $entry){
 			//add Author to array
 			$author = new Author();
-			$author->setName($entry->author->name);
-			$author->setUri($entry->author->uri);
+			$author->setName((!empty($entry->author->name))? $entry->author->name : 'NA');
+			$author->setUri((!empty($entry->author->uri))? $entry->author->uri : $entry->author->email);
 			$this->_authors[] = $author;
 			
 			//retrieve the author from db
@@ -94,11 +94,12 @@ class PropelAtomFeed
 				  ->findOne();
 			//add it to db if not found
 			if(!$author_db)
-				$autor->save();
+				$author->save();
 				
 		
 			//add entry Propelcommit to array
 			$commit = new Propelcommit();
+			$commit->setId($entry->id);
 			$commit->setTitle($entry->title);
 			$commit->setLink($entry->link);
 			$commit->setContent($entry->content);
@@ -120,8 +121,8 @@ class PropelAtomFeed
 		foreach($this->_xmlfeed->entry as $entry){
 			//add Author to array
 			$author = new Author();
-			$author->setName($entry->author->name);
-			$author->setUri($entry->author->uri);
+			$author->setName((!empty($entry->author->name))? $entry->author->name : 'NA');
+			$author->setUri((!empty($entry->author->uri))? $entry->author->uri : $entry->author->email);
 			$this->_authors[] = $author;
 			
 			//retrieve the author from db
@@ -131,7 +132,7 @@ class PropelAtomFeed
 				  ->findOne();
 			//add it to db if not found
 			if(!$author_db)
-				$autor->save();				
+				$author->save();				
 		}		
 	}
 	
@@ -145,6 +146,7 @@ class PropelAtomFeed
 		foreach($this->_xmlfeed->entry as $entry){
 			//add entry Propelcommit to array
 			$commit = new Propelcommit();
+			$commit->setId($entry->id);
 			$commit->setTitle($entry->title);
 			$commit->setLink($entry->link);
 			$commit->setContent($entry->content);
@@ -229,7 +231,10 @@ class PropelAtomFeed
 		if(!empty($commit)){
 			$this->_latest_db_update_date = $commit->getUpdateDate();
 		} else {
-			throw new \Exception('Failed to retrieve a PropelCommit entry from database.');
+			//log this and set the latest entry update date to one year back in time
+			$dt = new \DateTime();
+			$dt = $dt->modify('-1 year');
+			$this->_latest_db_update_date = $dt->format('Y-m-d h:i:s');
 		}
 	}	
 
@@ -245,8 +250,8 @@ class PropelAtomFeed
 	{
 		$query = new PropelcommitQuery();
 		foreach($this->_propelCommits as $commit){
-			$dt1 = new DateTime($commit->getUpdateDate());
-			$dt2 = new DateTime($this->_latest_db_update_date);
+			$dt1 = new \DateTime($commit->getUpdateDate()->format('Y-m-d h:i:s'));
+			$dt2 = new \DateTime($this->_latest_db_update_date->format('Y-m-d h:i:s'));
 			
 			//check only the entries added after the latest date in database
 			if( $dt1 > $dt2){

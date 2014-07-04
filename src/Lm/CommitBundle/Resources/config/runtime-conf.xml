@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <config>
   <propel>
-    <datasources default="lmdb">
+    <datasources default="default">
 
       <!-- match "id" below with the database "name" in schema.xml -->
-      <datasource id="lmdb">
+      <datasource id="default">
         <adapter>mysql</adapter>
         <connection>
           <dsn>mysql:host=localhost;dbname=lmdb</dsn>
