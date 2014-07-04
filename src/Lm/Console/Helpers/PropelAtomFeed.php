@@ -2,12 +2,16 @@
 
 namespace Lm\Console\Helpers;
 
+require_once 'PropelLmlog.php';
+
 use Lm\CommitBundle\Model\Author;
 use Lm\CommitBundle\Model\AuthorQuery;
 use Lm\CommitBundle\Model\File;
 use Lm\CommitBundle\Model\FileQuery;
 use Lm\CommitBundle\Model\Propelcommit;
 use Lm\CommitBundle\Model\PropelcommitQuery;
+use Lm\Console\Helpers\PropelLmlog;
+
 
 /** 
 /* PropelAtomFeed class - represents the information on the xml master.atom file containig the commits list of the Propel project
@@ -57,6 +61,14 @@ class PropelAtomFeed
      * @var		datetime
      */
 	private $_latest_db_update_date;
+	
+	/**
+	 * Log messages to database
+	 * 
+	 * 
+	 * @var		PropelLmlog
+	 */
+	private $_propelLmlog;
 	 
 	/**
      * Constructor
@@ -65,6 +77,9 @@ class PropelAtomFeed
      */
 	public function __construct($feedfile = 'master.atom.txt')
 	{
+		//create the log object
+		$this->_propelLmlog = new PropelLmlog();
+		
 		//open the file and extract the content
 		$file = fopen( $feedfile, 'r');
 		if( $file){
@@ -93,8 +108,11 @@ class PropelAtomFeed
 				  ->filterByUri($author->getUri())
 				  ->findOne();
 			//add it to db if not found
-			if(!$author_db)
+			if(!$author_db){
 				$author->save();
+			} else {
+				$author->setId($author_db->getId());
+			}
 				
 		
 			//add entry Propelcommit to array
@@ -106,6 +124,10 @@ class PropelAtomFeed
 			$commit->setUpdateDate($entry->updated);
 			$commit->setAuthorId($author->getId());
 			$this->_propelCommits[] = $commit;
+			
+			//log the result
+			$msg = 'Added Commit id: ' . $commit->getId() . ' created by author: ' . $author->getId() . ' - ' . $author->getName();
+			$this->_propelLmlog->logMessage($msg, PropelLmlog::NOTE);
 			
 		}
 		
@@ -228,7 +250,12 @@ class PropelAtomFeed
 		$commit = PropelcommitQuery::create()
 				->orderByUpdateDate('desc')
 				->findOne();
+		
 		if(!empty($commit)){
+			//log
+			$msg = 'Latest update - ' . $commit->getUpdateDate();
+			$this->_propelLmlog->logMessage($msg);
+			
 			$this->_latest_db_update_date = $commit->getUpdateDate();
 		} else {
 			//log this and set the latest entry update date to one year back in time
@@ -251,7 +278,7 @@ class PropelAtomFeed
 		$query = new PropelcommitQuery();
 		foreach($this->_propelCommits as $commit){
 			$dt1 = new \DateTime($commit->getUpdateDate()->format('Y-m-d h:i:s'));
-			$dt2 = new \DateTime($this->_latest_db_update_date->format('Y-m-d h:i:s'));
+			$dt2 = new \DateTime($this->_latest_db_update_date);
 			
 			//check only the entries added after the latest date in database
 			if( $dt1 > $dt2){
